@@ -1,0 +1,1145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #56f6e4 0%, #5b29ef 100%);
+    min-height: 100vh;
+    padding-top: 70px;
+    padding-bottom: 100px;
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 8px 20px;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header.scrolled {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px; /* Même largeur que les notes */
+    padding: 10px 30px;
+    margin: 0 auto;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-title a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+
+.logo_title {
+    width: 50px;
+}
+
+.logo-title h1 {
+    font-size: 34px;
+    color: #5280fc;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Bouton de toggle du thème */
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #5280fc;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: #f8f9ff;
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+/* Zone d'affichage des notes */
+.notes-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: white;
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.empty-state p {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.empty-subtitle {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Groupes de notes par mois */
+.month-group {
+    margin-bottom: 30px;
+}
+
+.month-label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.month-label::before {
+    content: '';
+    width: 4px;
+    height: 30px;
+    background: white;
+    border-radius: 2px;
+}
+
+
+/* Items de notes */
+.note-item-wrapper {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.note-item {
+    background: white;
+    padding: 14px;
+    padding-right: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*
+.note-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+    */
+
+.note-item i {
+    font-size: 24px;
+    color: #5280fc;
+    min-width: 24px;
+}
+
+.note-item-content {
+    flex: 1;
+}
+
+.note-item span {
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+    display: block;
+}
+
+/* Bouton de partage */
+.share-button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color:  #5280fc ;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    z-index: 0;
+}
+
+.share-button:hover {
+    background: #f8f9ff;
+}
+
+.share-button .share-tooltip {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #5280fc;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    margin-right: 10px;
+}
+
+.share-button .share-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid #5280fc;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+}
+
+.share-button:hover .share-tooltip {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+/* Modales */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    color: #333;
+}
+
+/* Header de visualisation et formulaire avec couleur */
+.modal-header-view,
+.modal-header-form {
+    background: linear-gradient(135deg, #56f6e4 0%, #5b29ef 100%);
+    padding: 8px;
+    padding-left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+}
+
+.modal-header-view i,
+.modal-header-form i {
+    font-size: 24px;
+    color: white;
+}
+
+.modal-header-view h2,
+.modal-header-form h2 {
+    flex: 1;
+    font-size: 22px;
+    color: white;
+    margin: 0;
+}
+
+.close-modal, .close-modal-view {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.close-modal-view {
+    color: white;
+}
+
+.close-modal-view:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Types de notes */
+.note-types {
+    padding: 25px;
+    display: grid;
+    gap: 12px;
+}
+
+.note-type-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.note-type-item:hover {
+    border-color: #5280fc;
+    background: #f8f9ff;
+    transform: translateX(5px);
+}
+
+.note-type-item i {
+    font-size: 24px;
+    color: #5280fc;
+}
+
+.note-type-item span {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Formulaires */
+form {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #5280fc;
+    background: #f8f9ff;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Liste items */
+.list-items {
+    margin-top: 15px;
+}
+
+.list-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.list-item input {
+    flex: 1;
+}
+
+.remove-item {
+    background: #ff4757;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.remove-item:hover {
+    background: #ee384a;
+    transform: scale(1.05);
+}
+
+.add-item {
+    background: #5280fc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.add-item:hover {
+    background: #5280fc;
+}
+
+/* Boutons */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: #5b29ef;
+    color: white;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #e5e5e5;
+}
+
+/* Actions de visualisation */
+#viewContent {
+    padding: 25px;
+}
+
+.view-field {
+    margin-bottom: 20px;
+}
+
+.view-field label {
+    display: block;
+    font-weight: 600;
+    color: #5280fc;
+    margin-bottom: 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.view-field p {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.view-field ul {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+
+/* Boutons de contact */
+.contact-actions {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #3d3d5c;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-contact {
+    background: #5280fc;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+}
+
+.btn-contact:hover {
+    background: #4169db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(82, 128, 252, 0.3);
+}
+
+.btn-phone {
+    background: #34c759;
+}
+
+.btn-phone:hover {
+    background: #2fb350;
+}
+
+.btn-email {
+    background: #5280fc;
+}
+
+.btn-email:hover {
+    background: #4169db;
+}
+
+
+/* Bouton ajouter à l'agenda */
+.add-to-calendar {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #3d3d5c;
+}
+
+.btn-calendar {
+    background: #5280fc;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-calendar:hover {
+    background: #4169db;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(82, 128, 252, 0.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Style personnalisé pour la scrollbar */
+.view-field ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+.view-field ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.view-field ul::-webkit-scrollbar-thumb {
+    background: #5280fc;
+    border-radius: 10px;
+}
+
+.view-field ul::-webkit-scrollbar-thumb:hover {
+    background: #4169db;
+}
+
+.view-field li {
+    padding: 12px 15px;
+    color: #333;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f9ff;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.view-field li:hover {
+    background: #eef0ff;
+}
+
+.view-field li .item-text {
+    flex: 1;
+}
+
+.view-field li.checked .item-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.view-field li .check-icon {
+    color: #4caf50;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.view-field li.checked .check-icon {
+    opacity: 1;
+}
+
+.view-actions {
+    display: flex;
+    gap: 10px;
+    padding: 20px 25px;
+    border-top: 1px solid #eee;
+    flex-wrap: wrap;
+}
+
+.btn-edit {
+    background-color: #5b29ef;
+    color: white;
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-delete {
+    background: #ff4757;
+    color: white;
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+}
+
+.btn-delete:hover {
+    background: #ee384a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/****** Footer de filtrage ******/
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
+
+/* Footer en mode sombre */
+.dark-mode footer {
+    background: rgba(30, 30, 30, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Container des boutons de filtre */
+.filter-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 0;
+}
+
+/* Trait de séparation en mode sombre */
+.dark-mode .filter-select {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Bouton d'ajout */
+.add-button {
+    width: 80px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background-color: #5280fc;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Boutons de filtre */
+.filter-select button {
+    flex: 1;
+    max-width: 90px;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #5280fc;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bouton "All" */
+.filter-select button:first-child {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* État hover */
+.filter-select button:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+/* Bouton actif */
+.filter-select button.active {
+    opacity: 1;
+    background: var(--primary-color);
+    color: #5280fc;
+    font-weight: 550;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.5);
+}
+
+.dark-mode .filter-select button.active {
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+    color: #5280fc;
+}
+
+/* Animation au tap (mobile) */
+.filter-select button:active {
+    transform: scale(0.95);
+}
+
+/* Espacement pour le contenu principal */
+main {
+    padding-bottom: 100px;
+}
+
+
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+.filter-select {
+    gap: 1rem;
+    }
+}
+
+@media (max-width: 610px) {
+.filter-select {
+    gap: 0.5rem;
+    }
+}
+
+
+/* Responsive */
+@media (max-width: 560px) {
+    footer {
+        padding: 12px 4px;
+    }
+
+    .footer-content {
+        gap: 1.2rem;
+        padding: 0 4px;
+    }
+
+    .filter-select {
+        gap: 5px;
+        padding-right: 8px;
+    }
+    
+    .filter-select button {
+        max-width: 50px;
+        min-width: 35px;
+        padding: 8px 4px;
+        font-size: 22px;
+    }
+    
+    .filter-select button:first-child {
+        font-size: 11px;
+        max-width: 40px;
+        padding: 8px 2px;
+    }
+
+    .add-button {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        font-size: 24px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* DARK MODE */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+body.dark-mode header {
+    background: #1a1a2e;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode header.scrolled {
+    background: rgba(26, 26, 46, 0.9);
+}
+
+body.dark-mode .logo-title h1 {
+    color: #5280fc;
+}
+
+body.dark-mode .theme-toggle {
+    color: #5280fc;
+}
+
+body.dark-mode .theme-toggle:hover {
+    background: rgba(86, 246, 228, 0.1);
+}
+
+body.dark-mode .empty-state {
+    color: white;
+}
+
+body.dark-mode .note-item {
+    background: #2d2d44;
+    color: white;
+}
+
+body.dark-mode .note-item span {
+    color: white;
+}
+
+body.dark-mode .note-item i {
+    color: #5280fc;
+}
+
+body.dark-mode .share-button:hover {
+    background: rgba(86, 246, 228, 0.1);
+}
+
+body.dark-mode .month-label {
+    color: white;
+}
+
+body.dark-mode .modal-content {
+    background: #2d2d44;
+}
+
+body.dark-mode .modal-header h2 {
+    color: white;
+}
+
+body.dark-mode .modal-header-view, 
+body.dark-mode .modal-header-form{
+    background: none;
+    background-color: #5b29ef;
+}
+
+body.dark-mode .close-modal {
+    color: #ccc;
+}
+
+body.dark-mode .close-modal:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+body.dark-mode .note-type-item {
+    background: #1a1a2e;
+    border-color: #3d3d5c;
+}
+
+body.dark-mode .note-type-item span {
+    color: white;
+}
+
+body.dark-mode .note-type-item:hover {
+    background: rgba(86, 246, 228, 0.1);
+    border-color: #5280fc;
+}
+
+body.dark-mode .form-group label {
+    color: white;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    background: #1a1a2e;
+    border-color: #3d3d5c;
+    color: white;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+    background: #16213e;
+    border-color: #5280fc;
+}
+
+body.dark-mode .view-field label {
+    color: #5280fc;
+}
+
+body.dark-mode .view-field p,
+body.dark-mode .view-field li {
+    color: white;
+    background: #2d2d44;
+}
+
+body.dark-mode .view-field li:hover {
+    background: rgba(86, 246, 228, 0.1);
+}
+
+body.dark-mode .view-actions {
+    border-top-color: #3d3d5c;
+}
+
+body.dark-mode .add-button{
+    background-color:/* #5280fc*/ #4169db;
+    box-shadow: 0 2px 12px rgba(102, 126, 234, 0.25);
+}
+
+
+
+
+
+
+
+
+
+
+/* Responsive */
+@media (max-width: 480px) {
+    .logo-title h1 {
+        font-size: 30px;
+    }
+
+    .header-content{
+        padding: 4px;
+    }
+
+    .modal-content {
+        max-width: 95%;
+        margin: 10px;
+    }
+
+    .view-actions {
+        flex-direction: column;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        width: 100%;
+    }
+
+    .note-item {
+        padding-right: 50px;
+    }
+
+    .share-button {
+        right: 10px;
+        font-size: 20px;
+    }
+    
+    .modal-header-view h2,
+    .modal-header-form h2 {
+        font-size: 18px;
+    }
+    
+    .modal-header-view i,
+    .modal-header-form i {
+        font-size: 20px;
+    }
+}
